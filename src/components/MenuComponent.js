@@ -2,11 +2,18 @@ import React, { Component } from 'react';
 import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle } from 'reactstrap';
 
 class Menu extends Component {
+
     constructor(props) {
         super(props);
+
         this.state = {
             selectedDish: null
         };
+        console.log('Menu Component constructor is invoked');
+    }
+
+    componentDidMount() {
+        console.log('Menu Component componentDidMount is invoked');
     }
 
     onDishSelect(dish) {
@@ -45,6 +52,8 @@ class Menu extends Component {
               </div>
             );
         });
+
+        console.log('Menu Component render is invoked');
 
         return ( //return what needs to be displayed in the UI
           <div className="container">
