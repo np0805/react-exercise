@@ -2,6 +2,14 @@ import React, { Component } from "react";
 import { Card, CardImg, CardText, CardBody, CardTitle } from 'reactstrap';
 
 class Dishdetail extends Component {
+
+    componentDidMount() {
+        console.log('Dishdetail Component componentDidMount is invoked');
+    }
+
+    componentDidUpdate() {
+        console.log('Dishdetail Component componentDidUpdate is invoked')
+    }
     
     constructor(props){
         super(props);
@@ -60,6 +68,8 @@ class Dishdetail extends Component {
     }
 
     render() {
+
+        console.log('Dishdetail Component componentDidMount render invoked')
 
         return ( //return what needs to be displayed in the UI
             <div className="container">
