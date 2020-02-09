@@ -1,6 +1,10 @@
-import React from "react";
-import { Card, CardImg, CardText, CardBody, CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import React, { Component } from "react";
+import { Card, CardImg, CardText, CardBody, CardTitle, 
+    Breadcrumb, BreadcrumbItem, Label, Modal, ModalHeader, 
+    ModalBody, Button, Row, Col, Form, FormGroup, Input } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { Control, LocalForm, Errors } from 'react-redux-form';
+
 
 
 function RenderDish({dish}) {
@@ -40,6 +44,7 @@ function RenderComments({comments}) {
                         );
                     })}
                 </ul>
+                <CommentForm />
             </div>
         );
     }
@@ -47,6 +52,80 @@ function RenderComments({comments}) {
     else {
         return(
             <div></div>
+        );
+    }
+}
+
+class CommentForm extends Component {
+    constructor(props) {
+        super(props);
+    
+        this.toggleModal = this.toggleModal.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+
+        this.state = {
+            isModalOpen: false
+        };
+    }
+
+
+    toggleModal() {
+        this.setState({
+            isModalOpen: !this.state.isModalOpen
+        });
+    }
+
+    handleSubmit(values) {
+        this.toggleModal();
+        console.log('Current State is: ' + JSON.stringify(values));
+        alert('Current State is: ' + JSON.stringify(values));
+        // event.preventDefault(); // prevent reloading to next page
+    }
+
+    render() {
+        return(
+            <div>
+                <Button outline onClick={this.toggleModal}>
+                    <span className="fa fa-pencil fa-lg"> Submit Comment</span>
+                </Button>
+                <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
+                    <ModalHeader>Submit Comment</ModalHeader>
+                    <ModalBody>
+                        <LocalForm onSubmit={this.handleLogin}>
+                            <Row className="form-group">
+                                <Label htmlFor="rating" md={12}>Rating</Label>
+                                <Col md={12}>
+                                    <Control.select model=".rating" name="rating" className="form-control">
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                    </Control.select>
+                                </Col>
+                            </Row>
+                            <Row className="form-group">
+                                <Label htmlFor="yourName" md={12}>Your Name</Label>
+                                <Col md={12}>
+                                    <Control.text model=".yourName" id="yourName" name="yourName"
+                                        placeholder="Your Name"
+                                        className="form-control" />
+                                </Col>
+                            </Row>
+                            <Row className="form-group">
+                                <Label htmlFor="comment" md={12}>Comment</Label>
+                                <Col md={12}>
+                                    <Control.textarea model=".comment" id="comment" name="comment"
+                                        rows="6" className="form-control" />
+                                </Col>
+                            </Row>
+                            <Button type="submit" color="primary">
+                                Submit
+                            </Button>
+                        </LocalForm>
+                    </ModalBody>
+                </Modal>
+            </div>
         );
     }
 }
