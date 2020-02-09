@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import { Card, CardImg, CardText, CardBody, CardTitle, 
     Breadcrumb, BreadcrumbItem, Label, Modal, ModalHeader, 
-    ModalBody, Button, Row, Col, Form, FormGroup, Input } from 'reactstrap';
+    ModalBody, Button, Row, Col } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 
-
+const required = (val) => val && val.length;
+const maxLength = (len) => (val) => !(val) || (val.length <= len);
+const minLength = (len) => (val) => val && (val.length >= len);
 
 function RenderDish({dish}) {
     if (dish != null) {
@@ -77,8 +79,10 @@ class CommentForm extends Component {
 
     handleSubmit(values) {
         this.toggleModal();
-        console.log('Current State is: ' + JSON.stringify(values));
-        alert('Current State is: ' + JSON.stringify(values));
+        // console.log('Current State is: ' + JSON.stringify(values));
+        // alert('Current State is: ' + JSON.stringify(values));
+        alert("Name: " + this.yourName.value + " Comment: " + this.comment.value);
+        values.preventDefault();
         // event.preventDefault(); // prevent reloading to next page
     }
 
@@ -109,7 +113,15 @@ class CommentForm extends Component {
                                 <Col md={12}>
                                     <Control.text model=".yourName" id="yourName" name="yourName"
                                         placeholder="Your Name"
-                                        className="form-control" />
+                                        className="form-control"
+                                        validators={{
+                                            required, minLength: minLength(3), maxLength: maxLength(15)
+                                        }} />
+                                    <Errors className="text-danger" model=".yourName" show="touched" messages={{
+                                        required: 'Required',
+                                        minLength: 'Must be greater than 2 characters',
+                                        maxLength: 'Must be less than 15 characters'
+                                    }} />
                                 </Col>
                             </Row>
                             <Row className="form-group">
