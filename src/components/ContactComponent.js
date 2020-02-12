@@ -50,8 +50,8 @@ class Contact extends Component {
     // }
 
     handleSubmit(values) {
-        console.log('Thank you for your feedback: ' + JSON.stringify(values));
-        alert('Thank you for your feedback: ' + JSON.stringify(values));
+        console.log('Thank you for your feedback! ' + JSON.stringify(values));
+        alert('Thank you for your feedback! ' + JSON.stringify(values));
         this.props.resetFeedbackForm();
         this.props.postFeedback(values.firstname, values.lastname, values.telnum, values.email, values.agree, values.contactType, values.message)
         // event.preventDefault();
